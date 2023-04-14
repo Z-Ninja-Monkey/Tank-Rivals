@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 650px;
+    height: 600px;
 }
 #Game canvas{
     border: 3px solid black;
