@@ -48,10 +48,17 @@ function setup() {
 	tankPointer.visible = false;
 
 	BuildLevel(
-		[0,0,0],
-		[1,1,1],
-		[0,1,0]
+		[0,0,0,0,0,0,0],
+		[0,9,9,9,9,9,0],
+		[0,9,9,1,9,9,0],
+		100
 		)
+	BuildLevel(
+		[0,9,9,9,9,9,0],
+		[0,9,9,9,9,9,0],
+		[0,0,0,9,0,0,0],
+		280
+		)			
 }
 
 function draw() {
@@ -71,15 +78,19 @@ function draw() {
 	woodCollider.rotation = wood.rotation;
 
 	for (let i = 0; i < bullets.length; i++) {
-		if (bullets[i].overlaps(woodCollider)) {
+		if (bullets[i].overlaps(woodCollider) || bullets[i].overlaps(barrierCollider)) {
 			bullets[i].remove();
 		}	
 	}
-
 	for (let i = 0; i < barriers.length; i++) {
 		barrierCollider[i].x = barriers[i].x;
 		barrierCollider[i].y = barriers[i].y;
 		barrierCollider[i].rotation = barriers[i].rotation;
+	}
+	for (let i = 0; i < wood.length; i++) {
+		woodCollider[i].x = wood[i].x;
+		woodCollider[i].y = wood[i].y;
+		woodCollider[i].rotation = wood[i].rotation;
 	}
 
 	gun.y = tank.y;
