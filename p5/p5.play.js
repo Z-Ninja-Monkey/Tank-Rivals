@@ -6287,7 +6287,7 @@ p5.prototype.registerMethod('init', function p5PlayInit() {
 	};
 
 	this.p5play.playIntro = async function () {
-		if (document.getElementById('p5play-intro')) return;
+		/*if (document.getElementById('p5play-intro')) return;
 		pInst._incrementPreload();
 		let p = document.createElement('div');
 		p.id = 'p5play-intro';
@@ -6307,6 +6307,7 @@ p5.prototype.registerMethod('init', function p5PlayInit() {
 		await pInst.delay(400);
 		p.remove();
 		pInst._decrementPreload();
+		*/
 	};
 
 	{
