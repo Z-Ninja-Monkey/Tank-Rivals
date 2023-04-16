@@ -29,6 +29,7 @@ function setup() {
 
 	wood = new Group();
 	woodCollider = new Group();
+	//woodHealths
 	woodCollider.color = color(99, 67, 16);
 	//woodCollider.overlaps(wood);
 
@@ -42,14 +43,14 @@ function setup() {
 	bullets = new Group();
 	bullets.overlaps(tank);
 	bullets.overlaps(wood);
-	bullets.depth = -10;
+	bullets.layer = 100;
 
 	tankPointer = new Sprite(0, 0, 20, 20, 'none');
 	tankPointer.visible = false;
 
 	BuildLevel(
 		[0,0,0,0,0,0,0],
-		[0,9,9,9,9,9,0],
+		[0,9,9,1,9,9,0],
 		[0,9,9,1,9,9,0],
 		100
 		)
@@ -58,7 +59,12 @@ function setup() {
 		[0,9,9,9,9,9,0],
 		[0,0,0,9,0,0,0],
 		280
-		)			
+		)	
+		
+		for (let i = 0; i < woodCollider.length; i++) {
+			wood[i].health = 10;
+			//console.log(wood[i2].health);
+		}
 }
 
 function draw() {
@@ -78,10 +84,29 @@ function draw() {
 	woodCollider.rotation = wood.rotation;
 
 	for (let i = 0; i < bullets.length; i++) {
+		let hitWood = false;
 		if (bullets[i].overlaps(woodCollider) || bullets[i].overlaps(barrierCollider)) {
-			bullets[i].remove();
-		}	
+			if (bullets[i].overlaps(woodCollider)) {
+				for (let i2 = 0; i2 < woodCollider.length; i2++) {
+					if (bullets[i].overlaps(woodCollider[i2])) {
+						wood[i2].health -= 1;
+						if (wood[i2].health <= 0) {
+							wood[i2].remove();
+							woodCollider[i2].remove();
+						}
+						hitWood = true;
+					}
+				}
+			} else if (bullets[i].overlaps(barrierCollider)) {
+				bullets[i].remove();
+			}
+			if (hitWood) {
+				bullets[i].remove();
+			}
+		}
 	}
+
+
 	for (let i = 0; i < barriers.length; i++) {
 		barrierCollider[i].x = barriers[i].x;
 		barrierCollider[i].y = barriers[i].y;

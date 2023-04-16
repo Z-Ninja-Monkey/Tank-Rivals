@@ -1,0 +1,1 @@
+(fixed) shooting while touching the wood, will cause an undefined overlaps error 
