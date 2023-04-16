@@ -90,6 +90,7 @@ function draw() {
 				for (let i2 = 0; i2 < woodCollider.length; i2++) {
 					if (bullets[i].overlaps(woodCollider[i2])) {
 						wood[i2].health -= 1;
+						drawHealthBar(10, wood[i2].health);
 						if (wood[i2].health <= 0) {
 							wood[i2].remove();
 							woodCollider[i2].remove();
@@ -105,7 +106,18 @@ function draw() {
 			}
 		}
 	}
-
+	function drawHealthBar(maxHealth, currentHealth) {
+		let healthRatio = currentHealth / maxHealth;
+		let barWidth = 200;
+		let greenWidth = barWidth * healthRatio;
+		let redWidth = barWidth - greenWidth;
+		
+		fill('green');
+		rect(20, 20, greenWidth, 20);
+		
+		fill('red');
+		rect(20 + greenWidth, 20, redWidth, 20);
+	  }
 
 	for (let i = 0; i < barriers.length; i++) {
 		barrierCollider[i].x = barriers[i].x;
