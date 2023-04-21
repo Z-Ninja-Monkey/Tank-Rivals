@@ -21,3 +21,27 @@ function WasdControl(tank, tankPointer) {
     tank.velocity.x = 0;
   }
 }
+
+function ArrowKeyControl(tank2, tankPointer2) {
+  if (kb.pressing('ArrowUp')) { // 'w' key
+    tank2.velocity.y = -speed;
+    tankPointer2.y += -speed * 10;
+  } else if (kb.pressing('ArrowDown')) { // 's' key
+    tank2.velocity.y = speed;
+    tankPointer2.y += speed * 10;
+  } else {
+    tank2.velocity.y = 0;
+  }
+
+  if (kb.pressing('ArrowLeft')) { // 'a' key
+    tank2.velocity.x = -speed;
+    tankPointer2.x += -speed * 10;
+  } else if (kb.pressing('ArrowRight')) { // 'd' key
+    tank2.velocity.x = speed;
+    tankPointer2.x += speed * 10;
+  } else {
+    tank2.velocity.x = 0;
+  }
+}
+
+
