@@ -94,6 +94,22 @@ function setup() {
 		}
 }
 
+function drawHealthBar(maxHealth, currentHealth) {
+	let healthRatio = currentHealth / maxHealth;
+	let barWidth = 200;
+	let greenWidth = barWidth * healthRatio;
+	//let redWidth = barWidth;
+	
+	fill('red');
+	let red = new Sprite(camera.x + 20, camera.y + 20, barWidth, 20,'none');
+	red.color = 'red';
+	fill('green');
+	let green = new Sprite(camera.x + 20, camera.y + 20, greenWidth, 20, 'none');
+	//new Sprite(20, 20, greenWidth, 20)
+	green.color = 'green';
+	
+  }
+
 function draw() {
 	clear();
 	background('gray');
@@ -116,20 +132,7 @@ function draw() {
 	woodCollider.rotation = wood.rotation;
 
 	calculateCollisions();
-
-	/*function drawHealthBar(maxHealth, currentHealth) {
-		let healthRatio = currentHealth / maxHealth;
-		let barWidth = 200;
-		let greenWidth = barWidth * healthRatio;
-		let redWidth = barWidth - greenWidth;
-		
-		fill('green');
-		rect(20, 20, greenWidth, 20);
-		
-		fill('red');
-		rect(20 + greenWidth, 20, redWidth, 20);
-	  }
-	  */
+	  
 	for (let i = 0; i < barriers.length; i++) {
 		barrierCollider[i].x = barriers[i].x;
 		barrierCollider[i].y = barriers[i].y;
