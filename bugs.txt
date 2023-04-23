@@ -1,1 +1,2 @@
 (fixed) shooting while touching the wood, will cause an undefined overlaps error 
+if tanks get too far away camera acts really weird

@@ -149,11 +149,25 @@ function draw() {
 
 	gun.y = tank.y;
 	gun.x = tank.x;
-	gun.rotateTo(mouse, 100, 0);
+	//gun.rotateTo(mouse, 100, 0);
+	if(kb.pressing('f')){
+		gun.rotationSpeed = -5;
+	}else if(kb.pressing('h')){
+		gun.rotationSpeed = 5;
+	}else {
+		gun.rotationSpeed = 0;
+	}
 
 	gun2.y = tank2.y;
 	gun2.x = tank2.x;
-	gun2.rotateTo(mouse, 100, 0);
+	//gun2.rotateTo(mouse, 100, 0);
+	if(kb.pressing('i')){
+		gun2.rotationSpeed = -5;
+	}else if(kb.pressing('p')){
+		gun2.rotationSpeed = 5;
+	}else {
+		gun2.rotationSpeed = 0;
+	}
 	
 	camera.x = (tank.x + tank2.x) / 2;
 	camera.y = (tank.y + tank2.y) / 2;
