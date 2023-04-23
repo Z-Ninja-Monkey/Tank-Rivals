@@ -159,11 +159,11 @@ function draw() {
 	camera.y = (tank.y + tank2.y) / 2;
 
 
-	let distance = Math.sqrt((tank.x - tank2.x) * (tank.x - tank2.x) + (tank.y - tank2.y) * (tank.y - tank2.y));
+	let distanceIsh = Math.pow((tank.x - tank2.x) * (tank.x - tank2.x) + (tank.y - tank2.y) * (tank.y - tank2.y), 0.5);
 
-	camera.zoom = 1.2 - distance * 1/1000;
+	camera.zoom = 1.4 - distanceIsh * 1/1000;
 	//alert(camera.zoom)
-	if (kb.pressing("space")) {
+	/*if (kb.pressing("space")) {
 		camera.zoom += 0.5;
-	}
+	}*/
 }
