@@ -14,7 +14,7 @@ let bullets;
 let gunType = 'miniGun';
 
 function preload(){
-	//image = loadImage('assets/blank.png');
+	tankImg = loadImage('assets/Green Tank.png');
 }
 
 function setup() {
@@ -22,9 +22,13 @@ function setup() {
 	canvas.parent("Game");
 	frameRate(60);
 
+	tankImg.resize(40,0);
+
 	tank = new Sprite(275, 275, 40, 40);
 	tank.color = 'green';
 	tank.health = 50;
+	tank.img = tankImg;
+	
 
 	tank2 = new Sprite(500, 275, 40, 40);
 	tank2.color = 'blue';
