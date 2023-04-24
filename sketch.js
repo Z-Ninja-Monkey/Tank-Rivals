@@ -24,9 +24,11 @@ function setup() {
 
 	tank = new Sprite(275, 275, 40, 40);
 	tank.color = 'green';
+	tank.health = 50;
 
 	tank2 = new Sprite(500, 275, 40, 40);
 	tank2.color = 'blue';
+	tank2.health = 50;
 
 	gun = new Sprite(275, 275, 40, 13, 'k');
 	gun.offset.x = 23;
@@ -99,14 +101,12 @@ function drawHealthBar(maxHealth, currentHealth) {
 	let barWidth = 200;
 	let greenWidth = barWidth * healthRatio;
 	//let redWidth = barWidth;
-	
+
 	fill('red');
-	let red = new Sprite(camera.x + 20, camera.y + 20, barWidth, 20,'none');
-	red.color = 'red';
+	rect(20, 20, barWidth, 20);
+
 	fill('green');
-	let green = new Sprite(camera.x + 20, camera.y + 20, greenWidth, 20, 'none');
-	//new Sprite(20, 20, greenWidth, 20)
-	green.color = 'green';
+	rect(20, 20, greenWidth, 20);
 	
   }
 
@@ -132,6 +132,26 @@ function draw() {
 	woodCollider.rotation = wood.rotation;
 
 	calculateCollisions();
+	for (let i = 0; i < bullets.length; i++) {
+		if(bullets[i].overlaps(tank) && bullets[i].from == 1){
+			bullets[i].remove();
+			tank.health-=1;
+			if(tank.health <= 0){
+				tank.remove();
+				gun.remove();
+			}
+		}		
+	}
+	for (let i = 0; i < bullets.length; i++) {
+		if(bullets[i].overlaps(tank2) && bullets[i].from == 0){
+			bullets[i].remove();
+			tank2.health -= 1;
+			if(tank2.health <= 0){
+				gun2.remove();
+				tank2.remove();
+			}
+		}		
+	}
 	  
 	for (let i = 0; i < barriers.length; i++) {
 		barrierCollider[i].x = barriers[i].x;
@@ -183,4 +203,5 @@ function draw() {
 	/*if (kb.pressing("space")) {
 		camera.zoom += 0.5;
 	}*/
+	drawHealthBar(50, tank.health);
 }

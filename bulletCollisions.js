@@ -6,7 +6,7 @@ function calculateCollisions(){
 				for (let i2 = 0; i2 < woodCollider.length; i2++) {
 					if (bullets[i].overlaps(woodCollider[i2])) {
 						wood[i2].health -= 1;
-						drawHealthBar(10, wood[i2].health);
+						//drawHealthBar(10, wood[i2].health);
 						if (wood[i2].health <= 0) {
 							wood[i2].remove();
 							woodCollider[i2].remove();
@@ -30,7 +30,7 @@ function calculateCollisions(){
 						hit = true;
 					}
 				}
-			}
+			} 
 			if (hit) {
 				bullets[i].remove();
 			}

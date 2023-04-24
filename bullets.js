@@ -7,6 +7,7 @@ function GunClickControl(bullets) {
     if (kb.pressing('g') && currentTime - lastShotTime > shotDelay) {
         bullet = new bullets.Sprite(tank.x, tank.y, 10, 'k');
         bullet.layer = -10;
+        bullet.from = 0;
         /*
         let angle = Math.atan2(mouse.y - tank.y, mouse.x - tank.x);
         bullet.velocity.x = Math.cos(angle) * 7;
@@ -19,6 +20,7 @@ function GunClickControl(bullets) {
     if (kb.pressing('o') && currentTime2 - lastShotTime2 > shotDelay) {
         bullet = new bullets.Sprite(tank2.x, tank2.y, 10, 'k');
         bullet.layer = -10;
+        bullet.from = 1;
         /*
         let ansgle = Math.atan2(mouse.y - tank.y, mouse.x - tank.x);
         bullet.velocity.x = Math.cos(angle) * 7;
