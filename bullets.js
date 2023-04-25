@@ -1,6 +1,6 @@
 let lastShotTime = 0;
 let lastShotTime2 = 0;
-let shotDelay = 100; // delay between shots in milliseconds
+let shotDelay = 140;
 
 function GunClickControl(bullets) {
     let currentTime = new Date().getTime();
