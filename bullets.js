@@ -5,6 +5,7 @@ let shotDelay = 140;
 function GunClickControl(bullets) {
     let currentTime = new Date().getTime();
     if (kb.pressing('g') && currentTime - lastShotTime > shotDelay) {
+        shootSound.play();
         bullet = new bullets.Sprite(tank.x, tank.y, 20, 'k');
         bullet.layer = -10;
         bullet.from = 0;
@@ -18,6 +19,7 @@ function GunClickControl(bullets) {
     }
     let currentTime2 = new Date().getTime();
     if (kb.pressing('o') && currentTime2 - lastShotTime2 > shotDelay) {
+        shootSound.play();
         bullet = new bullets.Sprite(tank2.x, tank2.y, 20, 'k');
         bullet.layer = -10;
         bullet.from = 1;

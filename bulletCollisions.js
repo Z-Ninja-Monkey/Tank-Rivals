@@ -6,6 +6,7 @@ function calculateCollisions(){
 				for (let i2 = 0; i2 < woodCollider.length; i2++) {
 					if (bullets[i].overlaps(woodCollider[i2])) {
 						wood[i2].health -= 1;
+						hitSound.play();
 						//drawHealthBar(10, wood[i2].health);
 						if (wood[i2].health <= 0) {
 							wood[i2].remove();
@@ -16,16 +17,19 @@ function calculateCollisions(){
 				}
 			} else if (bullets[i].overlaps(barrierCollider)) {
 				bullets[i].remove();
+				hitSound.play();
 
 			} else if (bullets[i].overlaps(explosiveCollider)) {
 				for (let i2 = 0; i2 < explosiveCollider.length; i2++) {
 					if (bullets[i].overlaps(explosiveCollider[i2])) {
 						explosive[i2].health -= 1;
+						hitSound.play();
 						//drawHealthBar(10, wood[i2].health);
 						if (explosive[i2].health <= 0) {
 							explosiveCollider[i2].remove();
 							explosion(explosive[i2]);
 							explosive[i2].remove();
+							explosionSound.play();
 						}
 						hit = true;
 					}
@@ -41,14 +45,25 @@ function calculateCollisions(){
 function explosion(explosive){
 	for (let i = 0; i < wood.length; i++) {
 		distance = dist(wood[i].x, wood[i].y, explosive.x, explosive.y);
-		alert(distance);
 		wood[i].health -= 600/distance;
-		alert(wood[i].health);
+		//alert(wood[i].health);
 		if(wood[i].health <= 0){
 			wood[i].remove();
 			woodCollider[i].remove();
 		}
 	}
+	for (let i = 0; i < explosive.length; i++) {
+		distance = dist(explosive[i].x, explosive[i].y, explosive.x, explosive.y);
+		explosive[i].health -= 600/distance;
+		//alert(wood[i].health);
+		if (explosive[i].health <= 0) {
+			explosiveCollider[i].remove();
+			explosion(explosive[i]);
+			explosive[i].remove();
+			explosionSound.play();
+		}
+	}
+
 	distance = dist(tank.x, tank.y, explosive.x, explosive.y);
 	tank.health -= 2000/distance;
 	if(tank.health <= 0){

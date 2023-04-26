@@ -13,12 +13,15 @@ let green;
 let gameStarted;
 let startButton;
 let startScreen;
+let title;
+let selectedArena;
 
 let bullets;
 
 let gunType = 'miniGun';
 
 function preload(){
+	soundFormats('wav');
 	tankImg = loadImage('assets/Green Tank.png');
 	gunImg = loadImage('assets/Green Gun.png');
 	tankImg2 = loadImage('assets/Blue Tank.png');
@@ -28,6 +31,14 @@ function preload(){
 	explosiveImg = loadImage('assets/Explosive.png');
 	bulletImg = loadImage('assets/bullet.png');
 	titleScreenImg = loadImage('assets/Start Screen.png');
+	titleImg = loadImage('assets/title.png');
+	buttonImg = loadImage('assets/button.png');
+	blueWin = loadImage('assets/blue.png');
+	greenWin = loadImage('assets/green.png');
+
+	shootSound = loadSound('assets/shoot.wav');
+	hitSound = loadSound('assets/hit.wav');
+	explosionSound = loadSound('assets/explosion.wav');
 }
 
 function setup() {
@@ -70,6 +81,8 @@ function setup() {
 	//woodHealths
 	woodCollider.color = color(99, 67, 16);
 	woodCollider.img = woodImg;
+	wood.layer = -2;
+	woodCollider.layer = -1;
 	//woodCollider.overlaps(wood);
 
 	barriers = new Group();
@@ -77,6 +90,8 @@ function setup() {
 	barrierCollider = new Group();
 	barrierCollider.color = 'gray';
 	barrierCollider.img = barrierImg;
+	barriers.layer = -2;
+	barrierCollider.layer = -1;
 	//barrierCollider.overlaps(barriers);
 	//new barriers.Sprite(600, 600, 60, 60, 'k');
 	//new barrierCollider.Sprite(600, 600);
@@ -102,35 +117,18 @@ function setup() {
 	tankPointer2 = new Sprite(0, 0, 20, 20, 'none');
 	tankPointer2.visible = false;
 
-	startButton = new Sprite(275, 275, 100, 30, 'none');
-	startButton.layer = 100;
+	startButton = new Sprite(265, 180, 130, 50, 'none');
+	startButton.layer = 101;
+	startButton.img = buttonImg;
 
-	startScreen = new Sprite(275, 275, 550, 550, 'k');
-	startScreen.layer = 999999999999;
-	// startScreen.img = titleScreenImg;
+	startScreen = new Sprite(275, 275, 550, 550, 'none');
+	startScreen.layer = 100;
+	startScreen.img = titleScreenImg;
+	startScreen.overlaps(allSprites);
+	title = new Sprite(275, 100, 10, 10, 'none');
+	title.layer = 101;
+	title.img = titleImg;
 
-	BuildLevel(
-		[0,0,0,0,0,0,0],
-		[0,9,9,2,9,9,0],
-		[0,9,9,1,9,9,0],
-		100
-		)
-	BuildLevel(
-		[0,9,9,9,9,9,0],
-		[0,9,9,9,9,9,0],
-		[0,0,0,9,0,0,0],
-		280
-		)	
-		
-		for (let i = 0; i < woodCollider.length; i++) {
-			wood[i].health = 10;
-			//console.log(wood[i2].health);
-		}
-		for (let i = 0; i < explosiveCollider.length; i++) {
-			explosive[i].health = 10;
-			//console.log(wood[i2].health);
-		}
-		drawHealthBar(50, tank.health);
 }
 
 function drawHealthBar(maxHealth, currentHealth) {
@@ -148,11 +146,55 @@ function drawHealthBar(maxHealth, currentHealth) {
 
 function draw() {
 
+	if(startButton.mouse.pressing()){
+		selectedArena = 0;
+		gameStarted = true;
+		startButton.remove();
+		startScreen.visible = false;
+		title.remove();
+		if(selectedArena == 0){
+			BuildLevel(
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+			100
+			)
+			BuildLevel(
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+			280
+			)
+			BuildLevel(
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+				[0,9,9,9,9,9,9,9,9,9,9,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+			460
+			)	
+			tank.x = 263;
+			tank.y = 165;
+			tank2.x = 800
+			tank2.y = 518;
+		}
+			for (let i = 0; i < woodCollider.length; i++) {
+				wood[i].health = 10;
+				//console.log(wood[i2].health);
+			}
+			for (let i = 0; i < explosiveCollider.length; i++) {
+				explosive[i].health = 10;
+				//console.log(wood[i2].health);
+			}
+	}
+
 	if(gameStarted){
 		game();
+		console.log(tank.x, tank.y, tank2.x, tank2.y);
 	}else{
-		startScreen.layer = 999999999999;
+		startScreen.layer = 100;
 		drawSprites();
+		if(mouse.pressing() && (startScreen.img == greenWin || startScreen.img == blueWin)){
+			document.location.reload();
+		}
 	}
 }
 
@@ -185,6 +227,10 @@ function game(){
 			if(tank.health <= 0){
 				tank.remove();
 				gun.remove();
+				gameStarted = false;
+				drawSprites();
+				startScreen.visible = true;
+				startScreen.img = blueWin;
 			}
 		}		
 	}
@@ -195,6 +241,10 @@ function game(){
 			if(tank2.health <= 0){
 				gun2.remove();
 				tank2.remove();
+				gameStarted = false;
+				drawSprites();
+				startScreen.visible = true;
+				startScreen.img = greenWin;
 			}
 		}		
 	}
@@ -249,8 +299,8 @@ function game(){
 	/*if (kb.pressing("space")) {
 		camera.zoom += 0.5;
 	}*/
-	red.remove();
-	green.remove();
+	//red.remove();
+	//green.remove();
 
-	drawHealthBar(50, tank.health);	
+	//drawHealthBar(50, tank.health);	
 }
