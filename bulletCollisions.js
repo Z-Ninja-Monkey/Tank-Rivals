@@ -65,14 +65,23 @@ function explosion(explosive){
 	}
 
 	distance = dist(tank.x, tank.y, explosive.x, explosive.y);
+	distance2 = dist(tank2.x, tank2.y, explosive.x, explosive.y);
 	tank.health -= 2000/distance;
 	if(tank.health <= 0){
 		tank.remove();
 		gun.remove();
+		gameStarted = false;
+		drawSprites();
+		startScreen.visible = true;
+		startScreen.img = blueWin;
 	}
-	tank2.health -= 2000/distance;
+	tank2.health -= 2000/distance2;
 	if(tank2.health <= 0){
 		tank2.remove();
 		gun2.remove();
+		gameStarted = false;
+		drawSprites();
+		startScreen.visible = true;
+		startScreen.img = greenWin;
 	}
 }

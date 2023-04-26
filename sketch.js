@@ -150,7 +150,7 @@ function drawHealthBar(maxHealth, currentHealth) {
 function draw() {
 
 	if(startButton.mouse.pressing()){
-		selectedArena = 0;
+		selectedArena = Math.floor(Math.random() * 4);
 		gameStarted = true;
 		startButton.remove();
 		startScreen.visible = false;
@@ -174,19 +174,77 @@ function draw() {
 				[0,0,0,0,0,0,0,0,0,0,0,0],
 			460
 			)	
-			tank.x = 263;
-			tank.y = 165;
-			tank2.x = 800
-			tank2.y = 518;
+		} else if(selectedArena == 1){
+			BuildLevel(
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,9,1,9,1,9,9,1,9,9,9,0],
+				[0,1,1,9,1,9,9,1,9,9,9,0],
+			100
+			)
+			BuildLevel(
+				[0,2,9,9,1,1,1,1,9,9,9,0],
+				[0,9,9,9,1,2,2,1,9,9,9,0],
+				[0,9,9,9,1,1,1,1,9,9,2,0],
+			280
+			)
+			BuildLevel(
+				[0,9,9,9,1,9,9,1,9,1,1,0],
+				[0,9,9,9,1,9,9,1,9,1,9,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+			460
+			)	
+		} else if(selectedArena == 2){
+			BuildLevel(
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,9,0,9,0,9,9,9,9,1,9,0],
+				[0,1,1,2,1,9,9,1,9,9,2,0],
+			100
+			)
+			BuildLevel(
+				[0,2,9,9,1,1,2,1,9,2,9,0],
+				[0,9,1,9,2,0,2,0,9,9,9,0],
+				[0,9,9,9,1,0,1,1,9,9,2,0],
+			280
+			)
+			BuildLevel(
+				[0,0,9,0,1,9,9,9,9,0,1,0],
+				[0,9,9,9,1,9,2,1,9,9,9,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+			460
+			)	
+		} else if(selectedArena == 3){
+			BuildLevel(
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,9,0,9,0,2,2,0,9,0,9,0],
+				[0,9,0,9,0,9,9,0,9,0,9,0],
+			100
+			)
+			BuildLevel(
+				[0,9,1,9,1,9,9,1,9,1,9,0],
+				[0,9,1,9,1,9,9,1,9,1,9,0],
+				[0,9,1,9,1,9,9,1,9,1,9,0],
+			280
+			)
+			BuildLevel(
+				[0,9,0,9,0,9,9,0,9,0,9,0],
+				[0,9,0,9,0,2,2,0,9,0,9,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0],
+			460
+			)	
 		}
-			for (let i = 0; i < woodCollider.length; i++) {
-				wood[i].health = 10;
-				//console.log(wood[i2].health);
-			}
-			for (let i = 0; i < explosiveCollider.length; i++) {
-				explosive[i].health = 10;
-				//console.log(wood[i2].health);
-			}
+
+		tank.x = 263;
+		tank.y = 165;
+		tank2.x = 800
+		tank2.y = 518;
+		for (let i = 0; i < woodCollider.length; i++) {
+			wood[i].health = 10;
+			//console.log(wood[i2].health);
+		}
+		for (let i = 0; i < explosiveCollider.length; i++) {
+			explosive[i].health = 10;
+			//console.log(wood[i2].health);
+		}
 	}
 
 	if(gameStarted){
