@@ -15,6 +15,7 @@ let startButton;
 let startScreen;
 let title;
 let selectedArena;
+let interval = 1000;
 
 let bullets;
 
@@ -39,6 +40,7 @@ function preload(){
 	shootSound = loadSound('assets/shoot.wav');
 	hitSound = loadSound('assets/hit.wav');
 	explosionSound = loadSound('assets/explosion.wav');
+	beepSound = loadSound('assets/beep.wav');
 }
 
 function setup() {
@@ -46,6 +48,7 @@ function setup() {
 	canvas.parent("Game");
 	frameRate(60);
 
+	startTime = millis();
 	//tankImg.resize(40,0);
 
 	tank = new Sprite(275, 275, 40, 40);
@@ -225,6 +228,7 @@ function game(){
 			bullets[i].remove();
 			tank.health-=1;
 			if(tank.health <= 0){
+				explosionSound.play();
 				tank.remove();
 				gun.remove();
 				gameStarted = false;
@@ -239,6 +243,7 @@ function game(){
 			bullets[i].remove();
 			tank2.health -= 1;
 			if(tank2.health <= 0){
+				explosionSound.play();
 				gun2.remove();
 				tank2.remove();
 				gameStarted = false;
@@ -287,7 +292,21 @@ function game(){
 	}else {
 		gun2.rotationSpeed = 0;
 	}
-	
+
+
+	if (millis() - startTime >= interval) {
+		beepSound.play();
+		interval *= 0.984;
+		startTime = millis();
+	}
+	if (abs(millis() - 60000) <= 10){
+		beepSound.stop();
+		setTimeout(() => {
+			explosionSound.play();
+		}, 500)
+		document.location.reload();
+		//alert('yo');
+	}
 	camera.x = (tank.x + tank2.x) / 2;
 	camera.y = (tank.y + tank2.y) / 2;
 
