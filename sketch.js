@@ -301,10 +301,10 @@ function game(){
 	}
 	if (abs(millis() - 60000) <= 10){
 		beepSound.stop();
+		explosionSound.play();
 		setTimeout(() => {
-			explosionSound.play();
-		}, 500)
-		document.location.reload();
+			document.location.reload();
+		}, 1000);
 		//alert('yo');
 	}
 	camera.x = (tank.x + tank2.x) / 2;
