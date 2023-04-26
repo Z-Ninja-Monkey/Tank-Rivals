@@ -10,6 +10,9 @@ let explosiveCollider;
 let tankPointer;
 let red;
 let green;
+let gameStarted;
+let startButton;
+let startScreen;
 
 let bullets;
 
@@ -24,6 +27,7 @@ function preload(){
 	woodImg = loadImage('assets/Wood.png');
 	explosiveImg = loadImage('assets/Explosive.png');
 	bulletImg = loadImage('assets/bullet.png');
+	titleScreenImg = loadImage('assets/Start Screen.png');
 }
 
 function setup() {
@@ -98,6 +102,13 @@ function setup() {
 	tankPointer2 = new Sprite(0, 0, 20, 20, 'none');
 	tankPointer2.visible = false;
 
+	startButton = new Sprite(275, 275, 100, 30, 'none');
+	startButton.layer = 100;
+
+	startScreen = new Sprite(275, 275, 550, 550, 'k');
+	startScreen.layer = 999999999999;
+	// startScreen.img = titleScreenImg;
+
 	BuildLevel(
 		[0,0,0,0,0,0,0],
 		[0,9,9,2,9,9,0],
@@ -136,6 +147,16 @@ function drawHealthBar(maxHealth, currentHealth) {
   }
 
 function draw() {
+
+	if(gameStarted){
+		game();
+	}else{
+		startScreen.layer = 999999999999;
+		drawSprites();
+	}
+}
+
+function game(){
 	clear();
 	background(color(50, 70, 50));
 	//tank controls

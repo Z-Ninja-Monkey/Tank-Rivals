@@ -23,9 +23,9 @@ function calculateCollisions(){
 						explosive[i2].health -= 1;
 						//drawHealthBar(10, wood[i2].health);
 						if (explosive[i2].health <= 0) {
-							explosive[i2].remove();
 							explosiveCollider[i2].remove();
-							explosion();
+							explosion(explosive[i2]);
+							explosive[i2].remove();
 						}
 						hit = true;
 					}
@@ -38,9 +38,26 @@ function calculateCollisions(){
 	}
 }
 
-function explosion(){
-	for (let i = 0; i < explosion.length; i++) {
-		const element = array[i];
-		
+function explosion(explosive){
+	for (let i = 0; i < wood.length; i++) {
+		distance = dist(wood[i].x, wood[i].y, explosive.x, explosive.y);
+		alert(distance);
+		wood[i].health -= 600/distance;
+		alert(wood[i].health);
+		if(wood[i].health <= 0){
+			wood[i].remove();
+			woodCollider[i].remove();
+		}
+	}
+	distance = dist(tank.x, tank.y, explosive.x, explosive.y);
+	tank.health -= 2000/distance;
+	if(tank.health <= 0){
+		tank.remove();
+		gun.remove();
+	}
+	tank2.health -= 2000/distance;
+	if(tank2.health <= 0){
+		tank2.remove();
+		gun2.remove();
 	}
 }
